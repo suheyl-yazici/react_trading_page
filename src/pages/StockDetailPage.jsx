@@ -2,19 +2,20 @@ import { useParams } from 'react-router-dom';
 import {useEffect, useState} from "react";
 import finnHub from '../apis/finnHub';
 import { StockChart } from '../components/StockChart';
+import { StockData } from '../components/StockData';
 
 
 const formatData = (data) => {
   return data.t.map((e, index) => {
     return {
       x: e * 1000,
-      y: data.c[index]
+      y: Math.floor(data.c[index])
     }
   })
 }
 
 export const StockDetailPage = () => {
-  const [chartData, setChartData] = useState([])
+  const [chartData, setChartData] = useState()
   const {symbol} = useParams();
 
 
@@ -79,6 +80,7 @@ export const StockDetailPage = () => {
       {chartData && (
         <div>
           <StockChart chartData={chartData} symbol={symbol}/>
+          <StockData symbol={symbol} />
         </div>
       )}
     </div>
